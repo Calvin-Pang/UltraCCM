@@ -1,0 +1,12 @@
+{
+  "train": {
+    "../data/exvivo/train/case_001": [100, 900],
+    "../data/exvivo/train/case_002": [120, 880]
+  },
+  "validation": {
+    "../data/exvivo/validation/case_003": [100, 900]
+  },
+  "test": {
+    "../data/exvivo/test/case_004": [100, 900]
+  }
+}

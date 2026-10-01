@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ultraccm"
+version = "0.1.0"
+description = "Consistency-model super-resolution for micro-ultrasound reconstruction"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+dependencies = [
+  "blobfile>=1.0.5",
+  "einops>=0.6",
+  "matplotlib>=3.7",
+  "mpi4py>=3.1",
+  "nibabel>=5.0",
+  "numpy>=1.23",
+  "Pillow>=9.0",
+  "piq>=0.7,<0.9",
+  "pydicom>=2.4",
+  "scipy>=1.9",
+  "torch>=2.0",
+  "torch-kde>=0.1.4",
+  "torchvision>=0.15",
+  "tqdm>=4.64"
+]
+
+[tool.setuptools.packages.find]
+include = ["cm*", "scripts*"]

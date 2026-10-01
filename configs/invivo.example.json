@@ -1,0 +1,12 @@
+{
+  "train": [
+    "../data/invivo/train/case_001",
+    "../data/invivo/train/case_002"
+  ],
+  "validation": [
+    "../data/invivo/validation/case_003"
+  ],
+  "test": [
+    "../data/invivo/test/case_004"
+  ]
+}

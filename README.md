@@ -1,23 +1,13 @@
 # UltraCCM
 
-UltraCCM applies consistency models to super-resolution reconstruction of
-three-dimensional micro-ultrasound data. The model reconstructs dense axial
-planes from sparsely sampled sagittal acquisitions and supports one-step
-inference.
+This repository contains the official implementation of UltraCCM introduced in
+the following paper:
 
-This public release contains the core model, in-vivo and ex-vivo data loaders,
-training code, and DICOM inference code. It does not contain patient data,
-trained checkpoints, experiment outputs, or reader-study material.
-
-## Repository layout
-
-```text
-cm/                         Core model, losses, sampling, and data processing
-scripts/train.py            In-vivo and ex-vivo training entry point
-scripts/inference_dicoms.py In-vivo and ex-vivo DICOM inference entry point
-configs/                    Example data manifests
-pyproject.toml              Python package and dependency metadata
-```
+[Medical Image Analysis] [Micro-ultrasound super-resolution with geometry-driven consistency models](https://doi.org/10.1016/j.media.2026.104333)
+<br>
+[Kaifeng Pang](https://kfpang.com), [Kai Zhao](https://kaizhao.net/), [Qi Miao](https://mrrl.ucla.edu/people/qi-miao-md-phd), [Alex Ling Yu Hung](https://web.cs.ucla.edu/~alexhung/), [Changsuk Oh](https://mrrl.ucla.edu/people/changsuk-oh-phd), [Raymi Ramirez](https://www.uclahealth.org/departments/radonc/education/residents/raymi-ramirez-phd), [Qiudi He](https://mrrl.ucla.edu/people/qiudi-he), Jordan Klein, [Wei Shao](https://www.linkedin.com/in/wei-shao-438782115/), [Wayne Brisbane](https://www.uclahealth.org/providers/wayne-brisbane), [Kyunghyun Sung](https://mrrl.ucla.edu/people/kyung-sung-phd)
+<br>
+Medical Image Analysis, 2026
 
 ## Installation
 
@@ -122,7 +112,7 @@ mpiexec -n 1 python -m scripts.train \
   --scale_mode progressive \
   --start_scales 2 \
   --end_scales 150 \
-  --total_training_steps 800000 \
+  --total_training_steps 200000 \
   --loss_norm lpips \
   --kl_loss True \
   --global_batch_size 2 \
@@ -159,7 +149,7 @@ checkpoint:
 mpiexec -n 1 python -m scripts.inference_dicoms \
   --dataset_mode exvivo \
   --data_manifest configs/exvivo.json \
-  --model_path checkpoints/target_model700000.pt \
+  --model_path checkpoints/target_model200000.pt \
   --save_dir outputs/exvivo \
   --sampler onestep
 ```
@@ -174,34 +164,29 @@ script removes private tags and clears several common identifying fields, but
 it is not a certified de-identification tool. Review every generated DICOM for
 protected health information before sharing it.
 
-## Checkpoints
-
-Checkpoints are not included in this source-only release. Place downloaded or
-locally trained checkpoints under `checkpoints/`, which is ignored by Git, or
-pass an absolute path to `--model_path`.
 
 ## Reproducibility notes
 
 - The published architecture uses no attention resolutions, so FlashAttention
   is not required for the commands above.
 - `axis_distance=15` and `scale=8` are the defaults used by the data pipeline.
-- Inference defaults to deterministic seed 42 and one-step sampling.
-- Exact reconstruction depends on DICOM geometry and acquisition metadata.
 
 ## License and acknowledgement
 
-This code is released under the MIT license in `LICENSE`. It builds on the
-OpenAI Consistency Models implementation; see `NOTICE.md` for attribution.
+This code is released under the MIT license in `LICENSE`.
 
-Please cite the original consistency-model work when using this code:
+UltraCCM builds on the [OpenAI Consistency Models](https://github.com/openai/consistency_models)
+implementation. We thank the authors for making their code publicly available.
+
+Please cite UltraCCM when using this code:
 
 ```bibtex
-@article{song2023consistency,
-  title={Consistency Models},
-  author={Song, Yang and Dhariwal, Prafulla and Chen, Mark and Sutskever, Ilya},
-  journal={arXiv preprint arXiv:2303.01469},
-  year={2023}
+@article{pang2026micro,
+  title={Micro-ultrasound super-resolution with geometry-driven consistency models},
+  author={Pang, Kaifeng and Zhao, Kai and Miao, Qi and Hung, Alex Ling Yu and Oh, Changsuk and Ramirez, Raymi and He, Qiudi and Klein, Jordan and Shao, Wei and Brisbane, Wayne and others},
+  journal={Medical Image Analysis},
+  pages={104333},
+  year={2026},
+  publisher={Elsevier}
 }
 ```
-
-Add the UltraCCM paper citation here when the bibliographic record is public.

@@ -57,8 +57,6 @@ cp configs/invivo.example.json configs/invivo.json
 cp configs/exvivo.example.json configs/exvivo.json
 ```
 
-No clinical or research DICOM data should be committed to this repository.
-
 ## Training
 
 The following architecture and optimization settings reproduce the principal
@@ -131,7 +129,7 @@ mpiexec -n 1 python -m scripts.train \
 
 ## Inference
 
-Run one-step reconstruction with the same architecture used during training:
+Run one-step inference with the same architecture used during training:
 
 ```bash
 mpiexec -n 1 python -m scripts.inference_dicoms \
